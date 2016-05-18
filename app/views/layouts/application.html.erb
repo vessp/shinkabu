@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FlapperNews</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+  <script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+</head>
+<body ng-app="flapperNews">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <ui-view></ui-view>
+    </div>
+  </div>
+
+  <script type="text/ng-template" id="/home.html">
+    <div class="page-header">
+      <h1>Flapper News</h1>
+    </div>
+
+    <form ng-submit="processForm()">
+
+      <!-- NAME -->
+      <div id="name-group" class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" placeholder="MSFT" ng-model="formData.name">
+        <span class="help-block"></span>
+      </div>
+
+      <!-- SUBMIT BUTTON -->
+      <button type="submit" class="btn btn-success btn-lg btn-block">
+        <span class="glyphicon glyphicon-flash"></span> Submit!
+      </button>
+    </form>
+
+    <!-- <div>
+        {{result}}
+    </div> -->
+
+    <table class="table table-striped table-bordered table-condensed">
+        <thead>
+            <tr><th colspan="2">{{result.symbol}}</th></tr>
+        </thead>
+        <tbody>
+            
+            <tr ng-repeat="(key, value) in result">
+            <th>{{key}}</th>
+            <td>{{value}}</td>
+            </tr>
+        </tbody>
+
+    </table>
+
+    <!-- <div ng-repeat="post in posts | orderBy:'-upvotes'">
+      <span class="glyphicon glyphicon-thumbs-up"
+        ng-click="incrementUpvotes(post)"></span>
+      {{post.upvotes}}
+      <span style="font-size:20px; margin-left:10px;">
+        <a ng-show="post.link" href="{{post.link}}">
+          {{post.title}}
+        </a>
+        <span ng-hide="post.link">
+          {{post.title}}
+        </span>
+      </span>
+      <span>
+        <a href="#/posts/{{$index}}">Comments</a>
+      </span>
+    </div> -->
+
+    
+  </script>
+
+  <script type="text/ng-template" id="/posts.html">
+    <div class="page-header">
+      <h3>
+        <a ng-show="post.link" href="{{post.link}}">
+          {{post.title}}
+        </a>
+        <span ng-hide="post.link">
+          {{post.title}}
+        </span>
+      </h3>
+    </div>
+
+    <div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
+      <span class="glyphicon glyphicon-thumbs-up"
+        ng-click="incrementUpvotes(comment)"></span>
+      {{comment.upvotes}} - by {{comment.author}}
+      <span style="font-size:20px; margin-left:10px;">
+        {{comment.body}}
+      </span>
+    </div>
+    <form ng-submit="addComment()"
+      style="margin-top:30px;">
+      <h3>Add a new comment</h3>
+
+      <div class="form-group">
+        <input type="text"
+        class="form-control"
+        placeholder="Comment"
+        ng-model="body"></input>
+      </div>
+      <button type="submit" class="btn btn-primary">Post</button>
+    </form>
+
+  </script>
+
+</body>
+</html>

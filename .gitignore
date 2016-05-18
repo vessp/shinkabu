@@ -1,47 +1,41 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+*.rbc
+capybara-*.html
+.rspec
+/log
+/tmp
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/public/system
+/coverage/
+/spec/tmp
+**.orig
+rerun.txt
+pickle-email-*.html
 
-# Folder config file
-Desktop.ini
+# TODO Comment out these rules if you are OK with secrets being uploaded to the repo
+config/initializers/secret_token.rb
+# config/secrets.yml
+/config/application.yml
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+## Environment normalization:
+/.bundle
+/vendor/bundle
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+# these should all be checked in to normalize the environment:
+# Gemfile.lock, .ruby-version, .ruby-gemset
 
-# Windows shortcuts
-*.lnk
+# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+.rvmrc
 
-# =========================
-# Operating System Files
-# =========================
+# if using bower-rails ignore default bower_components path bower.json files
+/vendor/assets/bower_components
+*.bowerrc
+bower.json
 
-# OSX
-# =========================
+# Ignore pow environment settings
+.powenv
 
-.DS_Store
-.AppleDouble
-.LSOverride
+# Ignore Byebug command history file.
+.byebug_history
+# Ignore application configuration
 
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
