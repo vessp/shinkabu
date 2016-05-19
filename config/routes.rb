@@ -3,9 +3,8 @@ Rails.application.routes.draw do
 
   root to: 'application#angular'
 
-  post 'stock' => 'application#stock'
   get 'stocks' => 'application#stocks'
-  get 'stocks2' => 'application#stocks2'
+  post 'stock' => 'application#stock'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

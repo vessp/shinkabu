@@ -13,46 +13,54 @@ angular.module('flapperNews', ['ui.router'])
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
 )
 
-# .factory('stocks',
-# ($http) ->
+.factory('stocks', ["$http", ($http) ->
 
-#     stocks = []
+    index = []
 
-#     # $http.get('/stock.json').success((resultJson) ->
-#     #     # // angular.copy(data, o.posts);
-#     #     quotes = resultJson.query.results.quote
-#     #     for item in quotes
-#     #         stocks.push(item)
-#     # )
+    $http.get('/stocks.json').success((jStocks) ->
+        console.log(jStocks)
+        for js in jStocks
+            index.push(js)
+    )
 
-#     # // stocks.push({"name": "asdf"}, {"name": "asdf2"})
-
-#     return {
-#         stocks : stocks
-#     }
-# )
-
-.controller('HomeCtrl',
-($scope, $http) ->
-    # $scope.stocks = stocks.stocks
-
-    $scope.formData = {
-        name: "MSFT"
+    return {
+        index : index
     }
+])
 
-    $scope.processForm = () ->
+.controller('HomeCtrl', ["$scope", "$http", "stocks", ($scope, $http, stocks) ->
+    $scope.stocks = stocks.index
+    $scope.isLoading = false
+    $scope.result = {}
+    $scope.activeSymbol = null
+
+    $scope.$watch(
+        () -> $scope.activeSymbol
+        () ->
+            $scope.onSelectStock($scope.activeSymbol)
+    )
+
+    $scope.onSelectStock = (symbol) ->
+        if(!symbol)
+            return
+
+        if(symbol.length == 0)
+            return
+
+        symbol = symbol[0]
+
+        $scope.isLoading = true
         $http({
             method  : 'POST',
             url     : '/stock.json',
-            data    : $.param($scope.formData),  #// pass in data as strings
+            data    : $.param({"symbol": symbol})
             headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  #// set the headers so angular passing info as form data (not request payload)
         })
         .success((data) ->
             console.log(data);
+            $scope.isLoading = false
 
-            timestamp = data.query.created
+            $scope.timestamp = data.query.created
             $scope.result = data.query.results.quote
         );
-
-    $scope.result = null
-)
+])

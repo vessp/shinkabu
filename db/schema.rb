@@ -14,7 +14,9 @@
 ActiveRecord::Schema.define(version: 20160515150350) do
 
   create_table "stocks", force: :cascade do |t|
+    t.string   "symbol"
     t.string   "name"
+    t.string   "exchange"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

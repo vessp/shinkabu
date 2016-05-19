@@ -8,54 +8,55 @@
 
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
 <body ng-app="flapperNews">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <ui-view></ui-view>
+    <div class="container-fluid">
+        <ui-view></ui-view>
     </div>
   </div>
 
-  <script type="text/ng-template" id="/home.html">
-    <div class="page-header">
-      <h1>Flapper News</h1>
-    </div>
+    <script type="text/ng-template" id="/home.html">
+        <div class="page-header">
+            <h1>Stocks</h1>
+        </div>
 
-    <form ng-submit="processForm()">
+        
+        <div class="row">
+            <div class="col-xs-3">
+                <!-- <ul style="height: 1000px;overflow:hidden; overflow-y:scroll;">
+                    <li ng-repeat="stock in stocks" ng-click="onSelectStock(stock)">{{stock.symbol}}
+                </ul> -->
+                <select multiple="false" class="form-control" style="height: 800px;" ng-model="activeSymbol">
+                    <option ng-repeat="stock in stocks">{{stock.symbol}}</option>
+                </select>
 
-      <!-- NAME -->
-      <div id="name-group" class="form-group">
-        <label>Name</label>
-        <input type="text" name="name" class="form-control" placeholder="MSFT" ng-model="formData.name">
-        <span class="help-block"></span>
-      </div>
+            </div>
+            <div class="col-xs-9">
+                <i id="spinner" ng-show="isLoading" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+                <table ng-show="!isLoading" class="table table-striped table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th colspan="1">{{result.symbol}}</th>
+                            <th>{{timestamp}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr ng-repeat="(key, value) in result">
+                        <th>{{key}}</th>
+                        <td>{{value}}</td>
+                        </tr>
+                    </tbody>
 
-      <!-- SUBMIT BUTTON -->
-      <button type="submit" class="btn btn-success btn-lg btn-block">
-        <span class="glyphicon glyphicon-flash"></span> Submit!
-      </button>
-    </form>
+                </table>
+            </div>
+        </div>
 
-    <!-- <div>
-        {{result}}
-    </div> -->
-
-    <table class="table table-striped table-bordered table-condensed">
-        <thead>
-            <tr><th colspan="2">{{result.symbol}}</th></tr>
-        </thead>
-        <tbody>
-            
-            <tr ng-repeat="(key, value) in result">
-            <th>{{key}}</th>
-            <td>{{value}}</td>
-            </tr>
-        </tbody>
-
-    </table>
+    
 
     <!-- <div ng-repeat="post in posts | orderBy:'-upvotes'">
       <span class="glyphicon glyphicon-thumbs-up"
@@ -75,41 +76,6 @@
     </div> -->
 
     
-  </script>
-
-  <script type="text/ng-template" id="/posts.html">
-    <div class="page-header">
-      <h3>
-        <a ng-show="post.link" href="{{post.link}}">
-          {{post.title}}
-        </a>
-        <span ng-hide="post.link">
-          {{post.title}}
-        </span>
-      </h3>
-    </div>
-
-    <div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
-      <span class="glyphicon glyphicon-thumbs-up"
-        ng-click="incrementUpvotes(comment)"></span>
-      {{comment.upvotes}} - by {{comment.author}}
-      <span style="font-size:20px; margin-left:10px;">
-        {{comment.body}}
-      </span>
-    </div>
-    <form ng-submit="addComment()"
-      style="margin-top:30px;">
-      <h3>Add a new comment</h3>
-
-      <div class="form-group">
-        <input type="text"
-        class="form-control"
-        placeholder="Comment"
-        ng-model="body"></input>
-      </div>
-      <button type="submit" class="btn btn-primary">Post</button>
-    </form>
-
   </script>
 
 </body>
